@@ -1,2 +1,2 @@
 # ku-polls
-../../wiki/home
+[wiki home](../../wiki/home)
