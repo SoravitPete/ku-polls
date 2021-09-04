@@ -3,7 +3,7 @@
 ## Project Documents
 All project-related documents are in the [wiki home](../../wiki/home)
 
-[Vision Statement](../../wiki/Vision Statement)<br/><br/>
+[Vision Statements](../../wiki/Vision Statements)<br/><br/>
 [Requirements](../../wiki/Requirements)<br/><br/>
 Interations<br/><br/>
--[Interation 1 Plan](../../wiki/Interation 1 Plan)
+-[Iteration 1 Plan](../../wiki/Iteration 1 Plan)
