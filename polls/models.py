@@ -19,16 +19,22 @@ class Question(models.Model):
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
 
-    def closed(self):
+    def was_closed(self):
         now = timezone.now()
         return self.end_date <= now
+    was_closed.boolean = True
+    was_closed.short_description = 'Closed?'
 
     def is_published(self):
         now = timezone.now()
         return self.pub_date <= now
+    is_published.boolean = True
+    is_published.short_description = 'Published?'
+
 
     def can_vote(self):
-        return self.is_published() and not self.closed()
+        now = timezone.now()
+        return self.is_published() and not self.was_closed() and now <= self.end_date
 
 
 class Choice(models.Model):
