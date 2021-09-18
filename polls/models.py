@@ -7,6 +7,7 @@ from django.utils import timezone
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    end_date = models.DateTimeField('date end', default=timezone.now() + datetime.timedelta(days=1))
 
     def __str__(self):
         return self.question_text
@@ -17,6 +18,22 @@ class Question(models.Model):
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
+
+    def was_closed(self):
+        now = timezone.now()
+        return self.end_date <= now
+    was_closed.boolean = True
+    was_closed.short_description = 'Closed?'
+
+    def is_published(self):
+        now = timezone.now()
+        return self.pub_date <= now
+    is_published.boolean = True
+    is_published.short_description = 'Published?'
+
+    def can_vote(self):
+        now = timezone.now()
+        return self.is_published() and not self.was_closed() and now <= self.end_date
 
 
 class Choice(models.Model):

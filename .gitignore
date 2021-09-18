@@ -7,6 +7,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+polls.json
 .Python
 build/
 develop-eggs/
