@@ -38,7 +38,7 @@ class QuestionModelTests(TestCase):
         This Test will return True for question which pub_date In the past
         """
         time = timezone.now() - datetime.timedelta(days=1)
-        old_question = Question(pubdate=time)
+        old_question = Question(pub_date=time)
         self.assertIs(old_question.is_published(), True)
 
     def test_is_can_vote_for_in_time_question(self):

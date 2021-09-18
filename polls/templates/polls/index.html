@@ -6,6 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% if messages %}
+    <div class="message">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
     {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
