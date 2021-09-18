@@ -1,21 +1,44 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <h1>{{ question.question_text }}</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'polls:index' %}">Polls</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'polls:index' %}">Home</a>
+                    </li>
+                </ul>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-{% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-{% endfor %}
-<input type="submit" value="Vote">
-</form>
-    <a href="{% url 'polls:index'%}">Back to List of Polls</a>
-</head>
-<body>
-
+            </div>
+        </div>
+    </nav>
+<div style="margin: 40px; border-style: solid;border-radius: 20px;border-width: thick; background-color: gray">
+        <h1 style="margin-left: 40px;margin-top: 20px">{{ question.question_text }}</h1>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <div style="margin: 40px">
+            <form action="{% url 'polls:vote' question.id %}" method="post">
+                {% csrf_token %}
+                {% for choice in question.choice_set.all %}
+                <div style="margin-top: 20px">
+                        <div style="margin-top: 20px">
+                        <button  type="submit"  class="btn btn-dark" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> VOTE</button>
+                        <label for="choice{{ forloop.counter }}"style="margin-left: 20px;font-size: x-large">{{ choice.choice_text }}</label></div><br>
+                {% endfor %}
+            </form>
+            <div style="margin-top: 40px;text-align: right">
+                <button  class="btn btn-dark">
+                <a href="{% url 'polls:index' %}" style="text-decoration: none;color:white;font-size: large ">Back to List of Polls</a>
+                </button>
+            </div>
+        </div>
+    </div>
+<body style = 'background: url(https://i.pinimg.com/originals/92/b6/d0/92b6d04750b80cbf1446be3f6ed7d4c5.jpg); background-size: 100%;' >
 </body>
-</html>

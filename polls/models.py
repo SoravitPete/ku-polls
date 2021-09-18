@@ -31,7 +31,6 @@ class Question(models.Model):
     is_published.boolean = True
     is_published.short_description = 'Published?'
 
-
     def can_vote(self):
         now = timezone.now()
         return self.is_published() and not self.was_closed() and now <= self.end_date

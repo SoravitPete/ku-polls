@@ -63,10 +63,19 @@ def get_queryset(self):
     ).order_by('-pub_date')[:5]
 
 
-def detail(request,question_id=None):
+def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    if not question.can_vote():
-        messages.error(request, f"Poll not available")
-        return HttpResponseRedirect(reverse('polls:index'))
+    if question.can_vote():
+        return render(request, 'polls/detail.html', {'question': question})
     else:
-        return render(request, 'polls/detail.html', {'question': question,})
+        messages.error(request, f'Sorry, voting for Question {question_id} is not allowed')
+        return redirect('polls:index')
+
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if question.is_published():
+        return render(request, 'polls/results.html', {'question': question })
+    else:
+        messages.error(request, f'Sorry, Question {question_id} not published yet')
+        return redirect('polls:index')
