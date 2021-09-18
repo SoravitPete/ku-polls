@@ -1,5 +1,7 @@
 from pathlib import Path
 import environ
+import os
+from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env()
 environ.Env.read_env()
@@ -14,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG',default = False)
+DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
