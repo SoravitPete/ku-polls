@@ -1,7 +1,6 @@
+"""Setting Web app."""
 from pathlib import Path
 import environ
-import os
-from django.core.exceptions import ImproperlyConfigured
 
 env = environ.Env()
 environ.Env.read_env()
