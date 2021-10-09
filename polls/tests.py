@@ -11,18 +11,17 @@ class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_old_question(self):
         """
-        was_published_recently() returns False for questions
+        was_published_recently() returns False for questions.
 
         whose pub_date is older than 1 day.
         """
-
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
         old_question = Question(pub_date=time)
         self.assertIs(old_question.was_published_recently(), False)
 
     def test_was_published_recently_with_recent_question(self):
         """
-        was_published_recently() returns True for questions whose pub_date
+        was_published_recently() returns True for questions whose pub_date.
 
         is within the last day.
         """
@@ -60,7 +59,7 @@ class QuestionModelTests(TestCase):
 
 def create_question(question_text, days):
     """
-    Create a question with the given `question_text` and published the
+    Create a question with the given `question_text` and published the.
 
     given number of `days` offset to now (negative for questions published
 
@@ -82,8 +81,9 @@ class QuestionIndexViewTests(TestCase):
 
     def test_past_question(self):
         """
-        Questions with a pub_date in the past are displayed on the
-        index page.
+        Questions with a pub_date in the past are displayed.
+
+        on the index page.
         """
         create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse('polls:index'))
@@ -94,8 +94,9 @@ class QuestionIndexViewTests(TestCase):
 
     def test_future_question(self):
         """
-        Questions with a pub_date in the future aren't displayed on
-        the index page.
+        Questions with a pub_date in the future aren't displayed.
+
+        on the index page.
         """
         create_question(question_text="Future question.", days=30)
         response = self.client.get(reverse('polls:index'))
@@ -104,7 +105,8 @@ class QuestionIndexViewTests(TestCase):
 
     def test_future_question_and_past_question(self):
         """
-        Even if both past and future questions exist, only past questions
+        Even if both past and future questions exist, only past questions.
+
         are displayed.
         """
         create_question(question_text="Past question.", days=-30)
@@ -131,7 +133,8 @@ class QuestionDetailViewTests(TestCase):
 
     def test_future_question(self):
         """
-        The detail view of a question with a pub_date in the future
+        The detail view of a question with a pub_date in the future.
+
         returns a 302 not found.
         """
         future_question = create_question(question_text='Future question.',
@@ -142,7 +145,8 @@ class QuestionDetailViewTests(TestCase):
 
     def test_past_question(self):
         """
-        The detail view of a question with a pub_date in the past
+        The detail view of a question with a pub_date in the past.
+
         displays the question's text.
         """
         past_question = create_question(question_text='Past Question.',
