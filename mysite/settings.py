@@ -1,4 +1,5 @@
 """Setting Web app."""
+import os
 from pathlib import Path
 import environ
 
@@ -42,12 +43,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    # username/password authentication
+   'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_REDIRECT_URL = '/polls/'
+
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

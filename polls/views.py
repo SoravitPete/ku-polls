@@ -6,6 +6,8 @@ from django.shortcuts import redirect, get_object_or_404, render
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class IndexView(generic.ListView):
@@ -43,6 +45,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required(login_url='/accounts/login/')
 def vote(request, question_id):
     """Make user to vote polls."""
     question = get_object_or_404(Question, pk=question_id)
@@ -92,3 +95,4 @@ def results(request, question_id):
         messages.error(request,
                        f'Sorry, Question {question_id} not published yet')
         return redirect('polls:index')
+
