@@ -1,4 +1,5 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
@@ -10,50 +11,54 @@
     {% if messages %}
     <div class="message">
         {% for message in messages %}
-            <p>{{ message }}</p>
+        <p>{{ message }}</p>
         {% endfor %}
     </div>
     {% endif %}
-        <table class="table table-dark table-striped"</table>
-            <thead>
-            <tr>
-                <th scope="col"><h2>Questions</h2></th>
-                <th scope="col"><h2>Vote</h2></th>
-                <th scope="col"><h2>Results</h2></th>
-            </tr>
-            </thead>
+    <table class="table table-dark table-striped"
+    </table>
+    <thead>
     <tr>
-    {% if latest_question_list %}
-    <ul>
-        <h1 class="center">Question list</h1>
-    {% for question in latest_question_list %}
-        </tr>
-            <td>
-            <h4>{{ question.question_text }}</h4>
-            </td>
-            {% if question.can_vote %}
-            <td>
-                <div>
-                    <button type="button" class="btn btn-light"><a href="{% url 'polls:detail' question.id %}">Vote</a></button>
+        <th scope="col"><h2>Questions</h2></th>
+        <th scope="col"><h2>Vote</h2></th>
+        <th scope="col"><h2>Results</h2></th>
+    </tr>
+    </thead>
+    <tr>
+        {% if latest_question_list %}
+        <ul>
+            <h1 class="center">Question list</h1>
+            {% for question in latest_question_list %}
+    </tr>
+    <td>
+        <h4>{{ question.question_text }}</h4>
+    </td>
+    {% if question.can_vote %}
+    <td>
+        <div>
+            <button type="button" class="btn btn-light"><a href="{% url 'polls:detail' question.id %}">Vote</a></button>
 
-                </div>
-            </td>
-            {% else %}
-            <td>
-            <h5<button type="button" class="btn btn-danger">Can't Vote</button></h5>
-            {% endif %}
-            </td>
-            <td>
-            <div>
-                <button type="button" class="btn btn-light"><a href="{% url 'polls:results' question.id %}">Results</a></button>
-            </div>
-            </td>
+        </div>
+    </td>
+    {% else %}
+    <td>
+        <h5
+        <button type="button" class="btn btn-danger">Can't Vote</button>
+        </h5>
+        {% endif %}
+    </td>
+    <td>
+        <div>
+            <button type="button" class="btn btn-light"><a href="{% url 'polls:results' question.id %}">Results</a>
+            </button>
+        </div>
+    </td>
     {% endfor %}
     </ul>
     {% else %}
     <p>No polls are available.</p>
     {% endif %}
 </head>
-<body style = 'background: url(https://i.pinimg.com/originals/92/b6/d0/92b6d04750b80cbf1446be3f6ed7d4c5.jpg); background-size: 100%;' >
+<body style='background: url(https://i.pinimg.com/originals/92/b6/d0/92b6d04750b80cbf1446be3f6ed7d4c5.jpg); background-size: 100%;'>
 </body>
 </html>
