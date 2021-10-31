@@ -4,6 +4,8 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+from django.contrib.auth.models import User
+
 
 class Question(models.Model):
     """Create a question model."""
@@ -12,7 +14,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
     end_date = models.DateTimeField('date end',
                                     default=timezone.now() +
-                                    datetime.timedelta(days=1))
+                                            datetime.timedelta(days=1))
 
     def __str__(self):
         """Return question text.
@@ -30,6 +32,7 @@ class Question(models.Model):
         """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
@@ -42,6 +45,7 @@ class Question(models.Model):
         """
         now = timezone.now()
         return self.end_date <= now
+
     was_closed.boolean = True
     was_closed.short_description = 'Closed?'
 
@@ -53,6 +57,7 @@ class Question(models.Model):
         """
         now = timezone.now()
         return self.pub_date <= now
+
     is_published.boolean = True
     is_published.short_description = 'Published?'
 
@@ -64,8 +69,8 @@ class Question(models.Model):
         """
         now = timezone.now()
         return self.is_published() and \
-            not self.was_closed() and \
-            now <= self.end_date
+               not self.was_closed() and \
+               now <= self.end_date
 
 
 class Choice(models.Model):
@@ -82,3 +87,15 @@ class Choice(models.Model):
             String: the choice text.
         """
         return self.choice_text
+
+
+class Vote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+
+    @property
+    def question(self):
+        return self.choice.question
+
+    def __str__(self):
+        return f"({self.user.username}) vote ({self.choice}) for ({self.question})"
