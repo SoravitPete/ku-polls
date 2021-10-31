@@ -25,5 +25,5 @@ class BasicAuthTests(TestCase):
     def test_user_log_out(self):
         self.client.post(reverse('login'), self.user)
         response = self.client.post(reverse('logout'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertFalse(response.context['user'].is_authenticated)
