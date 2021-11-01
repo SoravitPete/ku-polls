@@ -28,9 +28,16 @@
                 {% csrf_token %}
                 {% for choice in question.choice_set.all %}
                 <div style="margin-top: 20px">
-                        <div style="margin-top: 20px">
-                        <button  type="submit"  class="btn btn-dark" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> VOTE</button>
-                        <label for="choice{{ forloop.counter }}"style="margin-left: 20px;font-size: x-large">{{ choice.choice_text }}</label></div><br>
+                        {% if last_vote.id != choice.id %}
+                            <button type="submit" class="btn btn-dark" name="choice" id="choice{{ forloop.counter }}"
+                                    value="{{ choice.id }}"> Vote
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-danger" disabled> Voted
+                            </button>
+                        {% endif %}
+                        <label for="choice{{ forloop.counter }}"
+                               style="margin-left: 20px;font-size: x-large">{{ choice.choice_text }}</label></div><br>
                 {% endfor %}
             </form>
             <div style="margin-top: 40px;text-align: right">

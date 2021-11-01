@@ -1,11 +1,13 @@
 """Views for polls app."""
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class IndexView(generic.ListView):
@@ -43,8 +45,10 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required()
 def vote(request, question_id):
     """Make user to vote polls."""
+    user = request.user
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -55,8 +59,13 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        Vote.objects.update_or_create(user=user, defaults={'choice': selected_choice})
+        for choice in question.choice_set.all():
+            choice.votes = Vote.objects.filter(choice=choice).count()
+            choice.save()
+        if Vote.objects.filter(choice=choice).count() == 0:
+            selected_choice.votes += 1
+            selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results',
                                             args=(question.id,)))
 
@@ -92,3 +101,4 @@ def results(request, question_id):
         messages.error(request,
                        f'Sorry, Question {question_id} not published yet')
         return redirect('polls:index')
+
